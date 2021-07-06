@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 import { actionCreators as todoActions } from "../redux/modules/articles";
+import {history} from "../redux/configureStore";
+import {Link} from 'react-router-dom'
 
 const Main = (props) => {
 
@@ -67,16 +69,16 @@ const Main = (props) => {
 
             const {multimedia} = article
             return(
-            <article key={article._id}>
-              <div>
-              <img src={`https://static01.nyt.com/${multimedia[0].url}`} alt={article.print_page}/>
+            <All key={article._id} onClick={()=>{history.push()}}>
+              <a href={article.web_url}>이동</a>
+              <A_IMG src={`https://static01.nyt.com/${multimedia[0].url}`} alt={article.print_page}/>
               <Box>
               {/* {article.abstract}
               {article.web_url} */}
               {article.lead_paragraph}
               </Box>
-              </div>
-            </article>
+             
+            </All>
             )}
           )}
         </MainContainer>
@@ -127,6 +129,7 @@ border: 1px solid black;
   const All = styled.div`
    display: flex;
    flex-direction: row;
+   border: 1px solid red;
   `
 
   const A_IMG = styled.img`
