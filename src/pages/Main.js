@@ -20,6 +20,7 @@ const Main = (props) => {
     const response = await res.json()
     setArticles(response.response.docs);
     console.log(articles);
+
   } catch (error) {
     console.error(error)
    }
@@ -60,7 +61,13 @@ const Main = (props) => {
             </FavoritesContainer>
         </TopContainer>
         <MainContainer>
-          <button>기사</button>
+          {articles.map((article)=>
+          
+          <Box>
+            {article.abstract}
+            {article.web_url}
+          </Box>
+          )}
         </MainContainer>
         <BottomContainer>
             불러오기
@@ -111,6 +118,13 @@ border: 1px solid black;
   border: 1px solid black;
 
   `
+  const Box = styled.div`
+  width: 100%;
+  height: 10%;
+  border: 1px solid black;
+
+  `
+  
 
 // (function(){
 // 	const form = document.querySelector("#search-form");
