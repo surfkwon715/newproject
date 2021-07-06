@@ -11,8 +11,9 @@ const Main = (props) => {
   const [articles, setArticles]= useState([])
   const [term, setTerm]= useState('everything')
   const [isLoading,setIsLoading] = useState(true)
+  const [word,setWord] = React.useState("a")
 
-  useEffect(()=>{
+
   const fetchArticles = async() =>{
     try {
     const res = await fetch(
@@ -27,6 +28,9 @@ const Main = (props) => {
     console.error(error)
    }
   }
+
+  useEffect(()=>{
+
     fetchArticles()
   },[])
 
@@ -57,7 +61,7 @@ const Main = (props) => {
         </Header>
         <TopContainer>
             <SearchContainer>
-                검색
+               <input onChange={(e)=>{setWord(e.target.value)}} placeholder="찾고싶은 단어를 입력해주세요"></input>
             </SearchContainer>
             <FavoritesContainer>
                 <button>즐겨찾기</button>
@@ -65,24 +69,34 @@ const Main = (props) => {
         </TopContainer>
         <MainContainer>
           {articles.map((article)=>{
-
-
-            const {multimedia} = article
+            const {multimedia,lead_paragraph} = article
+            if(article.lead_paragraph.includes(word)){
+              
             return(
-            <All key={article._id} onClick={()=>{history.push()}}>
-              <a href={article.web_url}>이동</a>
+              <MovePage href={article.web_url}>
+            <All key={article._id}>
+              
+                
+                
+                
               <A_IMG src={`https://static01.nyt.com/${multimedia[0].url}`} alt={article.print_page}/>
               <Box>
-              {/* {article.abstract}
-              {article.web_url} */}
-              {article.lead_paragraph}
+              {lead_paragraph.length>=30?`${lead_paragraph.slice(0,31)}...more`:lead_paragraph}
               </Box>
+              
+              
+              
+              
+              
+            
+              
              
             </All>
-            )}
+            </MovePage>
+            )}}
           )}
         </MainContainer>
-        <BottomContainer>
+        <BottomContainer onClick={()=>{fetchArticles();}}>
             불러오기
         </BottomContainer>
       </React.Fragment>
@@ -125,7 +139,10 @@ border: 1px solid black;
   border: 1px solid black;
 
   `
-
+  const MovePage =styled.a`
+  text-decoration: none;
+  
+  `
   const All = styled.div`
    display: flex;
    flex-direction: row;
@@ -146,7 +163,7 @@ border: 1px solid black;
   const Box = styled.div`
   width: 100%;
   height: 10%;
-  border: 1px solid black;
+ 
 
   `
   
