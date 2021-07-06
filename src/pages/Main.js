@@ -8,10 +8,9 @@ const Main = (props) => {
 
   const [articles, setArticles]= useState([])
   const [term, setTerm]= useState('everything')
-  const [isLoading,seIsLoading] = useState(true)
+  const [isLoading,setIsLoading] = useState(true)
 
   useEffect(()=>{
-   
   const fetchArticles = async() =>{
     try {
     const res = await fetch(
@@ -19,7 +18,8 @@ const Main = (props) => {
       )
     const response = await res.json()
     setArticles(response.response.docs);
-    console.log(articles);
+   
+    // console.log(response.response.docs);
 
   } catch (error) {
     console.error(error)
@@ -28,6 +28,7 @@ const Main = (props) => {
     fetchArticles()
   },[])
 
+  console.log(articles);
 
   // const Load = () => {
   //   loadArticles()
@@ -50,7 +51,7 @@ const Main = (props) => {
     return (
       <React.Fragment>
         <Header>
-
+          MY NYTIMES  
         </Header>
         <TopContainer>
             <SearchContainer>
@@ -61,12 +62,22 @@ const Main = (props) => {
             </FavoritesContainer>
         </TopContainer>
         <MainContainer>
-          {articles.map((article)=>
-          
-          <Box>
-            {article.abstract}
-            {article.web_url}
-          </Box>
+          {articles.map((article)=>{
+
+
+            const {multimedia} = article
+            return(
+            <article key={article._id}>
+              <div>
+              <img src={`https://static01.nyt.com/${multimedia[0].url}`} alt={article.print_page}/>
+              <Box>
+              {/* {article.abstract}
+              {article.web_url} */}
+              {article.lead_paragraph}
+              </Box>
+              </div>
+            </article>
+            )}
           )}
         </MainContainer>
         <BottomContainer>
@@ -108,9 +119,20 @@ border: 1px solid black;
   `
   const MainContainer = styled.div`
   width: 100%;
-  height: 60vh;
+  height: 150vh;
   border: 1px solid black;
 
+  `
+
+  const All = styled.div`
+   display: flex;
+   flex-direction: row;
+  `
+
+  const A_IMG = styled.img`
+   width: 70px;
+   height: 70px;
+   background-size: cover;
   `
   const BottomContainer = styled.div`
   width: 100%;
