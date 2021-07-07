@@ -16,7 +16,7 @@ const Favorties = (props) => {
 
 
   // useEffect(()=>{
-  //   fetchArticles()
+  // 
   // },[])
 
 
@@ -41,7 +41,7 @@ const Favorties = (props) => {
           
             return(
               <MovePage href={article.web_url}>
-            <All key={article._id}>
+            <All key={_id}>
               <A_IMG src={`https://static01.nyt.com/${multimedia[0].url}`} alt={article.print_page}/>
               <Box>
               {lead_paragraph.length>=30?`${lead_paragraph.slice(0,31)}...more`:lead_paragraph}

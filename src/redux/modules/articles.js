@@ -57,7 +57,7 @@ const actionCreators = {
     fetchArticles,
     getArticles,
     addArticles,
-    addFavorites ,
+    addFavorites,
 };
 
 export { actionCreators };
