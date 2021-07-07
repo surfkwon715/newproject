@@ -9,19 +9,8 @@ import StarIcon from '@material-ui/icons/Star';
 
 const Favorties = (props) => {
   const dispatch = useDispatch();
-  const [articles, setArticles]= useState([])
-  const [term, setTerm]= useState('everything')
-  const [isLoading,setIsLoading] = useState(true)
   const [word,setWord] = React.useState("a")
   const favorites = useSelector((state) => state.articles.favoritesArr);
-
-
-  // useEffect(()=>{
-  // 
-  // },[])
-
-
-
 
     return (
       <React.Fragment>
