@@ -5,10 +5,13 @@ import { produce } from "immer";
 // action
 const LOAD = "LOAD ";
 const ADD = "ADD";
+const DELETE ="DELETE";
 
 // actionCreator
 const getArticles = createAction(LOAD, (articles) => ({articles}));
 const addArticles= createAction(ADD,(article)=>({article}));
+const deleteArticles= createAction(DELETE,(id)=>({id}));
+
 
 // initialState
 const initialState = {
@@ -22,7 +25,6 @@ const fetchArticles =  (pageNum) =>{
     const res = await fetch(
       `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=all&page=${pageNum}&api-key=wTwRh7Blb0nUPWPWvHQCWVupJSoQBqeu`
       )
-    
     const response = await res.json()
     dispatch(getArticles(response.response.docs));
   
@@ -38,6 +40,13 @@ const addFavorites = (article)=>{
   }
 }
 
+const deleteFavorites = (id)=>{
+  return function (dispatch, getState) {
+    dispatch(deleteArticles(id))
+  }
+}
+
+
 // reducer
 export default handleActions(
   {
@@ -49,7 +58,13 @@ export default handleActions(
       produce(state, (draft) => {
       draft.favoritesArr.unshift(action.payload.article);
     }),
-  },
+    [DELETE]: (state, action) => produce(state, (draft) => {
+      draft.favoritesArr = draft.favoritesArr.filter((a)=>{
+        if(a._id !== action.payload.id){
+          return [...draft.favoritesArr,a]
+        }
+      })
+      })},
   initialState
 );
 
@@ -58,6 +73,8 @@ const actionCreators = {
     getArticles,
     addArticles,
     addFavorites,
+    deleteFavorites,
+    deleteArticles,
 };
 
 export { actionCreators };

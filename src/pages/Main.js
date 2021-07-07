@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux"
 import { actionCreators as todoActions } from "../redux/modules/articles";
 import {history} from "../redux/configureStore";
 import Favorties from './Favorites';
+import StarIcon from '@material-ui/icons/Star';
 
 const Main = (props) => {
   const dispatch = useDispatch();
@@ -35,7 +36,7 @@ const Main = (props) => {
         </TopContainer>
         <MainContainer>
           {articles.map((article)=>{
-            // article['star']=false;
+           
             const {multimedia,lead_paragraph,web_url,_id} = article
             if(lead_paragraph.includes(word)){
               
@@ -48,12 +49,11 @@ const Main = (props) => {
                   </Box>
                 </MovePage>
                 <FavortiesBtn onClick={()=>{
-                  // article.star=true; 
-                  // favorites.push(article); 
                   dispatch(todoActions.addFavorites(article));
                   console.log(favorites);
+                
                   }}>
-                  즐겨찾기 버튼
+                {favorites.includes(article) ?<StarIcon style={{color:"blue"}}/>:<StarIcon style={{color:"lightgrey"}}/>}
                 </FavortiesBtn>
             </All>
             )}}

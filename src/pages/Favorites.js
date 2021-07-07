@@ -1,13 +1,14 @@
 import React, {useState, useEffect} from 'react';
 import styled from "styled-components";
-import { useSelector } from "react-redux"
+import { useSelector ,useDispatch} from "react-redux"
 import axios from "axios";
 import { actionCreators as todoActions } from "../redux/modules/articles";
 import {history} from "../redux/configureStore";
 import {Link} from 'react-router-dom'
+import StarIcon from '@material-ui/icons/Star';
 
 const Favorties = (props) => {
-
+  const dispatch = useDispatch();
   const [articles, setArticles]= useState([])
   const [term, setTerm]= useState('everything')
   const [isLoading,setIsLoading] = useState(true)
@@ -40,20 +41,27 @@ const Favorties = (props) => {
             const {multimedia,lead_paragraph,_id} = article
           
             return(
+              <All key={_id}>
               <MovePage href={article.web_url}>
-            <All key={_id}>
               <A_IMG src={`https://static01.nyt.com/${multimedia[0].url}`} alt={article.print_page}/>
               <Box>
               {lead_paragraph.length>=30?`${lead_paragraph.slice(0,31)}...more`:lead_paragraph}
               </Box>
-            </All>
+            
             </MovePage>
+             <FavortiesBtn onClick={()=>{
+              // article.star=true; 
+              // favorites.push(article); 
+              dispatch(todoActions.deleteFavorites(_id));
+              console.log(favorites);
+              }}>
+              {favorites.includes(article) ?<StarIcon style={{color:"blue"}}/>:<StarIcon style={{color:"lightgrey"}}/>}
+            </FavortiesBtn>
+        
+            </All>
             )}
           )}
         </MainContainer>
-        <BottomContainer onClick={()=>{}}>
-            불러오기
-        </BottomContainer>
       </React.Fragment>
     );
   };
@@ -120,5 +128,9 @@ border: 1px solid black;
   height: 10%;
  
 
+  `
+
+  const FavortiesBtn = styled.button`
+  
   `
   
