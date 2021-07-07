@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux"
 import axios from "axios";
 import { actionCreators as todoActions } from "../redux/modules/articles";
 import {history} from "../redux/configureStore";
@@ -8,58 +8,47 @@ import {Link} from 'react-router-dom'
 import Favorties from './Favorites';
 
 const Main = (props) => {
-
-  const [articles, setArticles]= useState([]);
+  const dispatch = useDispatch();
   const [term, setTerm]= useState('everything');
-  const [pageNum,setPageNum] =useState(2);
+  const [pageNum,setPageNum] =useState(0);
   const [isLoading,setIsLoading] = useState(true)
   const [word,setWord] = React.useState("a");
   
+  const articles = useSelector((state) => state.articles.allArr);
 
- 
+ console.log(articles);
+
   useEffect(()=>{
-    fetchArticles()
+    dispatch(todoActions.fetchArticles(pageNum));
+    window.scrollTo(0,0);
   },[pageNum]);
 
 
   const favoritesArr = [];
-  const fetchArticles = async() =>{
-    try {
-    const res = await fetch(
-      `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=food&page=${pageNum}&api-key=wTwRh7Blb0nUPWPWvHQCWVupJSoQBqeu`
-      )
-    const response = await res.json()
-    setArticles(response.response.docs);
+  // const fetchArticles = async() =>{
+  //   try {
+  //   const res = await fetch(
+  //     `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=all&page=${pageNum}&api-key=wTwRh7Blb0nUPWPWvHQCWVupJSoQBqeu`
+  //     )
+  //   const response = await res.json()
+  //   setArticles(response.response.docs);
    
-    // console.log(response.response.docs);
+  //   // console.log(response.response.docs);
 
-  } catch (error) {
-    console.error(error)
-   }
-  }
+  // } catch (error) {
+  //   console.error(error)
+  //  }
+  // }
 
  
 
-  console.log(articles);
+  // console.log(articles);
 
   // const Load = () => {
   //   loadArticles()
   // };
   // const apiKey = "";
   
-  // const loadArticles = () =>{
-  //  
-  //   axios.get(`https://api.nytimes.com/svc/search/v2/articlesearch.json?q=election&api-key=wTwRh7Blb0nUPWPWvHQCWVupJSoQBqeu`)
-  //     .then((response) => {
-  //       console.log( response );
-  //     })
-  //     .catch(error => {
-  //       console.log("No Connection");
-  //     }); 
-  // }
-
-
-
     return (
       <React.Fragment>
       
@@ -76,7 +65,7 @@ const Main = (props) => {
         </TopContainer>
         <MainContainer>
           {articles.map((article)=>{
-            article['star']=false;
+            // article['star']=false;
             const {multimedia,lead_paragraph,web_url,_id} = article
             if(lead_paragraph.includes(word)){
               
@@ -106,7 +95,8 @@ const Main = (props) => {
         <BottomContainer 
           onClick={()=>{
           setPageNum(pageNum+1);
-          console.log(pageNum); 
+          console.log(pageNum);
+         
         }}>
             불러오기
         </BottomContainer>
