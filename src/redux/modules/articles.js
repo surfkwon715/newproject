@@ -1,19 +1,19 @@
 
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
-import axios from "axios";
-
-
 
 // action
 const LOAD = "LOAD ";
+const ADD = "ADD";
 
-// action creator
+// actionCreator
 const getArticles = createAction(LOAD, (articles) => ({articles}));
+const addArticles= createAction(ADD,(article)=>({article}));
 
-// 초기값
+// initialState
 const initialState = {
    allArr: [],
+   favoritesArr: [],
 };
 
 const fetchArticles =  (pageNum) =>{
@@ -32,15 +32,23 @@ const fetchArticles =  (pageNum) =>{
  }
 }
 
+const addFavorites = (article)=>{
+  return function (dispatch, getState) {
+    dispatch(addArticles(article))
+  }
+}
 
-
-// 리듀서
+// reducer
 export default handleActions(
   {
     [LOAD]: (state, action) =>
       produce(state, (draft) => {
         draft.allArr = action.payload.articles;
       }),
+    [ADD]: (state, action) =>
+      produce(state, (draft) => {
+      draft.favoritesArr.unshift(action.payload.article);
+    }),
   },
   initialState
 );
@@ -48,6 +56,8 @@ export default handleActions(
 const actionCreators = {
     fetchArticles,
     getArticles,
+    addArticles,
+    addFavorites ,
 };
 
 export { actionCreators };

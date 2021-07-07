@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux"
 import axios from "axios";
 import { actionCreators as todoActions } from "../redux/modules/articles";
 import {history} from "../redux/configureStore";
@@ -12,45 +12,13 @@ const Favorties = (props) => {
   const [term, setTerm]= useState('everything')
   const [isLoading,setIsLoading] = useState(true)
   const [word,setWord] = React.useState("a")
+  const favorites = useSelector((state) => state.articles.favoritesArr);
 
 
-  const fetchArticles = async() =>{
-    try {
-    const res = await fetch(
-      `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${term}&api-key=wTwRh7Blb0nUPWPWvHQCWVupJSoQBqeu`
-      )
-    const response = await res.json()
-    setArticles(response.response.docs);
-   
-    // console.log(response.response.docs);
+  // useEffect(()=>{
+  //   fetchArticles()
+  // },[])
 
-  } catch (error) {
-    console.error(error)
-   }
-  }
-
-  useEffect(()=>{
-
-    fetchArticles()
-  },[])
-
-  console.log(articles);
-
-  // const Load = () => {
-  //   loadArticles()
-  // };
-  // const apiKey = "";
-  
-  // const loadArticles = () =>{
-  //  
-  //   axios.get(`https://api.nytimes.com/svc/search/v2/articlesearch.json?q=election&api-key=wTwRh7Blb0nUPWPWvHQCWVupJSoQBqeu`)
-  //     .then((response) => {
-  //       console.log( response );
-  //     })
-  //     .catch(error => {
-  //       console.log("No Connection");
-  //     }); 
-  // }
 
 
 
@@ -68,35 +36,22 @@ const Favorties = (props) => {
             </FavoritesContainer>
         </TopContainer>
         <MainContainer>
-          {articles.map((article)=>{
-            const {multimedia,lead_paragraph} = article
-            if(article.star==true){
-              
+          {favorites.map((article)=>{
+            const {multimedia,lead_paragraph,_id} = article
+          
             return(
               <MovePage href={article.web_url}>
             <All key={article._id}>
-              
-                
-                
-                
               <A_IMG src={`https://static01.nyt.com/${multimedia[0].url}`} alt={article.print_page}/>
               <Box>
               {lead_paragraph.length>=30?`${lead_paragraph.slice(0,31)}...more`:lead_paragraph}
               </Box>
-              
-              
-              
-              
-              
-            
-              
-             
             </All>
             </MovePage>
-            )}}
+            )}
           )}
         </MainContainer>
-        <BottomContainer onClick={()=>{fetchArticles();}}>
+        <BottomContainer onClick={()=>{}}>
             불러오기
         </BottomContainer>
       </React.Fragment>
