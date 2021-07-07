@@ -1,8 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import { Route } from 'react-router';
-import {BrowserRouter} from "react-router-dom";
+import { ConnectedRouter } from "connected-react-router";
+import { history } from "./redux/configureStore";
 
 import Main from "./pages/Main";
+import Favorties from './pages/Favorites';
 
 
 
@@ -10,11 +12,11 @@ function App() {
   return (
     <React.Fragment>
  
-      <BrowserRouter>
+  <ConnectedRouter history={history}>
     
         <Route path="/" exact component={Main} />
-      </BrowserRouter>
-  
+        <Route path="/favorites" exact component={Favorties} />
+  </ConnectedRouter>
   </React.Fragment>
   );
 }
