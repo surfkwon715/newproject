@@ -21,8 +21,6 @@ const Main = (props) => {
     window.scrollTo(0,0);
   },[pageNum]);
 
-
-
     return (
       <React.Fragment>
         <Header>
@@ -79,7 +77,7 @@ const Main = (props) => {
     display:flex;
     margin:auto;
     justify-content: center;
-    width: 90%;
+    width: 100%;
     height: 10vh;
     border: 1px solid black;
     font-size: 5vh;
@@ -92,19 +90,19 @@ const Main = (props) => {
 
   `
   const TopContainer = styled.div`
-    width: 90%;
-    height: 5vh;
+    width: 100%;
+    height: 8vh;
     display:flex;
     margin:auto;
     justify-content: center;
     flex-direction: row;
-    border: 1px solid black;
+    
   `
   const SearchContainer = styled.div`
     display:flex;
     flex-direction: row;
     align-items: center;
-    width: 50%;
+    width: 80%;
     height: 100%;
     background-color: black;
     color: white;
@@ -123,7 +121,7 @@ const Main = (props) => {
    margin-left:5px;
   `
   const FavoritesContainer = styled.div`
-    width: 50%;
+    width: 20%;
     font-size: 25px;
     background-color: black;
     color: white;
@@ -142,31 +140,50 @@ const Main = (props) => {
 `
  
   const MainContainer = styled.div`
-    width: 90%;
-    height: 80%;
+    display:flex;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 200vh;
     border: 1px solid black;
-    
     margin:auto;
     justify-content: center;
+    background-color: black;
+
   `
   const MovePage =styled.a`
+  display: flex;
+  flex-direction: column;
   text-decoration: none;
+  width: 90%;
   
   `
   const All = styled.div`
    display: flex;
    flex-direction: row;
-   border: 1px solid red;
+   width:40%;
+   height:40vh;
+   flex-direction: row;
+   margin: 3%;
+   :hover {
+    box-shadow: rgb(82 82 82/ 60%) 2px 5px 12px 2px;
+    transition: box-shadow 0.2s ease-in 0s;
+  }
+   
   `
 
   const A_IMG = styled.img`
-   width: 70px;
-   height: 70px;
-   background-size: cover;
+   display: flex;
+   width: 100%;
+   height: 80%;
+  
   `
 
   const FavortiesBtn = styled.button`
-  
+   width: 10%;
+   border: none;
+   outline: none;
+   background-color: black;
+   
   `
   const BottomContainer = styled.div`
   width: 100%;
@@ -175,9 +192,10 @@ const Main = (props) => {
 
   `
   const Box = styled.div`
-  width: 100%;
-  height: 10%;
- 
-
+  display: flex;
+  width:100%;
+  height:20%;
+  background-color: black;
+  color: white;
   `
   
