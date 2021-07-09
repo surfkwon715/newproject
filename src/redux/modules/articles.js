@@ -2,6 +2,7 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 
+
 // action
 const LOAD = "LOAD ";
 const ADD = "ADD";
@@ -23,7 +24,7 @@ const fetchArticles =  (pageNum) =>{
   return async function (dispatch, getState) {
     try {
     const res = await fetch(
-      `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=everything&page=${pageNum}&api-key=wTwRh7Blb0nUPWPWvHQCWVupJSoQBqeu`
+      `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=all&page=${pageNum}&api-key=wTwRh7Blb0nUPWPWvHQCWVupJSoQBqeu`
       )
     const response = await res.json()
     dispatch(getArticles(response.response.docs));

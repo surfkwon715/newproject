@@ -2,7 +2,13 @@
     font-family: "edosz";
     src: url("./fonts/edosz.ttf") format("truetype");
   }
-
-.Title{
-    font-family: "edosz";
+@font-face {
+  font-family: "NewYork";
+  src: url("./fonts/Chomsky-399c.woff") format("truetype");
 }
+.Title{
+    font-family: "NewYork";
+}
+
+
+
