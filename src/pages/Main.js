@@ -20,13 +20,13 @@ import SearchIcon from '@material-ui/icons/Search';
 //  4. 사용자의 입력에 따른 검색기능
 //  5. 즐겨찾기 페이지로 이동
 //  6. 불러오기 버튼을 누르면 
-const Main = (props) => {
+const Main = () => {
   const dispatch = useDispatch();
   const [pageNum,setPageNum] =useState(0);
   const [word,setWord] = React.useState("a");
   const articles = useSelector((state) => state.articles.allArr);  
   const favorites = useSelector((state) => state.articles.favoritesArr);
-
+  
   useEffect(()=>{
     dispatch(todoActions.fetchArticles(pageNum));
     window.scrollTo(0,0);
@@ -34,16 +34,17 @@ const Main = (props) => {
 
   return (
     <React.Fragment>
+      <Container>
       <Header>
         <div className="Title" style={{ margin: "1%", padding: "1%"}}>Awesome New York Times </div>  
       </Header>
       <TopContainer>
           <SearchContainer>
-            <SearchIcon/>
-            <SearchBox onChange={(e)=>{setWord(e.target.value)}} placeholder="Please click here and Search contents.."></SearchBox >
+            <SearchIcon style={{paddingLeft:"10px"}}/>
+            <SearchBox onChange={(e)=>{setWord(e.target.value)}} placeholder="Search contents here.."></SearchBox >
           </SearchContainer>
           <FavoritesContainer>
-            <FavoritesBtn onClick={()=>{history.push("/favorites")}}>⭐ Your Favorites</FavoritesBtn > 
+            <FavoritesBtn onClick={()=>{history.push("/favorites")}}>⭐ Favorites</FavoritesBtn > 
           </FavoritesContainer>
       </TopContainer>
       <MainContainer>
@@ -70,6 +71,7 @@ const Main = (props) => {
           </All>
           )}}
         )}
+       
       </MainContainer>
       <BottomContainer 
         onClick={()=>{
@@ -80,10 +82,14 @@ const Main = (props) => {
           Do you want more articles?... <span style={{color:"blue"}}> 불러오기</span>
         </BText>
       </BottomContainer>
+      </Container>
     </React.Fragment>
   )};
   export default Main;
-  
+   const Container = styled.div`
+    display: flex;
+    flex-direction: column;
+   `
   const Header = styled.div`
     display:flex;
     margin: auto;
@@ -97,7 +103,14 @@ const Main = (props) => {
     color: #121212;
     font-weight: 500px;
     letter-spacing: 2px;
-  
+    @media (max-width: 768px){
+      font-size: 3rem;
+      height: 6vh;
+     };
+    @media (max-width: 376px){
+      font-size: 1rem;
+      height: 4vh;
+    };
   `
   const TopContainer = styled.div`
     width: 90%;
@@ -106,17 +119,22 @@ const Main = (props) => {
     margin:auto;
     justify-content: center;
     flex-direction: row;
+    @media (max-width: 768px){
+      height: 3vh;
+     };
+
   `
   const SearchContainer = styled.div`
     padding: 1% 0% 0% 7%;
     display:flex;
     flex-direction: row;
     align-items: center;
-    width: 80%;
+    width: 70%;
     height: 100%;
     background-color: beige;
     color: black;
    
+    
   `
 
   const SearchBox =styled.input`
@@ -129,17 +147,27 @@ const Main = (props) => {
    outline :none;
    border: none;
    margin-left: 10px;
+   @media (max-width: 768px){
+    font-size: 13px;
+   };
+   @media (max-width: 376px){
+    font-size: 1px;
+    margin-left: 4px;
+    };
   `
   const FavoritesContainer = styled.div`
    display:  flex; 
-  width: 20%;
-    font-size: 25px;
+   width: 30%;
     background-color: beige;
     color: white;
     padding: 1% 12% 0% 0%;
     align-items: center;
+    
   `
   const  FavoritesBtn = styled.button`
+  display:flex;
+  flex-direction:row;
+  width: 100%;
   font-size: 20px;
   background-color: beige;
   color: grey;
@@ -148,6 +176,14 @@ const Main = (props) => {
   font-weight: bold;
   margin-top: 1%;
   cursor: pointer;
+  @media (max-width: 768px){
+    font-size: 13px;
+   };
+   @media (max-width: 376px){
+    font-size: 10px;
+    
+    };
+ 
 `
  
   const MainContainer = styled.div`
@@ -160,6 +196,15 @@ const Main = (props) => {
     background-color: beige;
     background-size: 100% 100%;
     background-repeat: no-repeat;
+    @media (max-width: 768px){
+      height:120vh;
+     };
+     @media (max-width: 376px){
+      width:90%;
+      height:350vh;
+    };
+     
+    
   `
   const MovePage =styled.a`
   display: flex;
@@ -180,6 +225,14 @@ const Main = (props) => {
    height:40vh;
    flex-direction: row;
    margin: 3%;
+   @media (max-width: 768px){
+    height:20vh;
+   };
+   @media (max-width: 376px){
+    width:80%;
+    height:30vh;
+  };
+   
   `
 
   const A_IMG = styled.img`
@@ -198,17 +251,20 @@ const Main = (props) => {
    margin-left: 15px;
    background-color: beige;
    cursor: pointer;
+   
+   
   `
   const BottomContainer = styled.div`
+  display:flex;
   width: 90%;
-  height: 15vh;
+  height: 10vh;
   background-color: beige;
   color: black;
-  display:flex;
   margin:auto;
   justify-content: center;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 15px;
+  padding:2%;
   `
   const Box = styled.div`
   display: flex;
@@ -224,5 +280,6 @@ const Main = (props) => {
   display: flex;
   margin: auto;
   cursor: pointer;
+
+   
   `
-  
