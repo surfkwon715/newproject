@@ -9,19 +9,19 @@ const ADD = "ADD";
 const DELETE ="DELETE";
 
 // actionCreator
-const getArticles = createAction(LOAD, (articles) => ({articles}));
-const addArticles= createAction(ADD,(article)=>({article}));
-const deleteArticles= createAction(DELETE,(id)=>({id}));
+const getArticles = createAction(LOAD, (articles:any) => ({articles}));
+const addArticles= createAction(ADD,(article:any)=>({article}));
+const deleteArticles= createAction(DELETE,(id:any)=>({id}));
 
 
 // initialState
-const initialState = {
+const initialState:any = {
    allArr: [],
    favoritesArr: [],
 };
 
-const fetchArticles =  (pageNum) =>{
-  return async function (dispatch, getState) {
+const fetchArticles =  (pageNum:number) =>{
+  return async function (dispatch:any) {
     try {
     const res = await fetch(
       `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=all&page=${pageNum}&api-key=wTwRh7Blb0nUPWPWvHQCWVupJSoQBqeu`
@@ -35,14 +35,14 @@ const fetchArticles =  (pageNum) =>{
  }
 }
 
-const addFavorites = (article)=>{
-  return function (dispatch, getState) {
+const addFavorites = (article:any)=>{
+  return function (dispatch:any) {
     dispatch(addArticles(article))
   }
 }
 
-const deleteFavorites = (id)=>{
-  return function (dispatch, getState) {
+const deleteFavorites = (id:string)=>{
+  return function  (dispatch:any)  {
     dispatch(deleteArticles(id))
   }
 }
@@ -51,16 +51,16 @@ const deleteFavorites = (id)=>{
 // reducer
 export default handleActions(
   {
-    [LOAD]: (state, action) =>
-      produce(state, (draft) => {
+    [LOAD]: (state:any, action:any) =>
+      produce(state, (draft:any) => {
         draft.allArr = action.payload.articles;
       }),
-    [ADD]: (state, action) =>
-      produce(state, (draft) => {
+    [ADD]: (state:any, action:any) =>
+      produce(state, (draft:any)  => {
       draft.favoritesArr.unshift(action.payload.article);
     }),
-    [DELETE]: (state, action) => produce(state, (draft) => {
-      draft.favoritesArr = draft.favoritesArr.filter((a)=>{
+    [DELETE]: (state:any, action:any) => produce(state, (draft:any) => {
+      draft.favoritesArr = draft.favoritesArr.filter((a:any)=>{
         if(a._id !== action.payload.id){
           return [...draft.favoritesArr,a]
         }

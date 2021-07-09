@@ -7,11 +7,20 @@ import StarIcon from '@material-ui/icons/Star';
 import SearchIcon from '@material-ui/icons/Search';
 import "../font.css";
 
-const Favorties = (props) => {
+export interface IArticle {
+  multimedia:any;
+  lead_paragraph:string;
+  _id:string; 
+  web_url:string;
+  print_page: string;
+}
+
+const Favorties = () => {
+
   const dispatch = useDispatch();
   const [word,setWord] = React.useState("a")
-  const favorites = useSelector((state) => state.articles.favoritesArr);
-
+  const favorites = useSelector((state:any) => state.articles.favoritesArr);
+  
     return (
       <React.Fragment>
         <Header>
@@ -19,7 +28,7 @@ const Favorties = (props) => {
       </Header>
         <TopContainer>
         <SearchContainer>
-               <SearchIcon style={{marginLeft:"15px"}}/>
+               <SearchIcon style={{paddingLeft:"10px"}}/>
                <SearchBox onChange={(e)=>{setWord(e.target.value)}} placeholder="Search contents here.."></SearchBox >
             </SearchContainer>
             <FavoritesContainer>
@@ -29,14 +38,14 @@ const Favorties = (props) => {
             </FavoritesContainer>
         </TopContainer>
         <MainContainer>
-          {favorites.map((article)=>{
-            const {multimedia,lead_paragraph,_id} = article
+          {favorites.map((article:IArticle)=>{
+            const {multimedia,lead_paragraph,_id,web_url,print_page}  = article
             if(lead_paragraph.includes(word)){
 
             return(
               <All key={_id}>
-              <MovePage href={article.web_url}>
-              <A_IMG src={`https://static01.nyt.com/${multimedia[0].url}`} alt={article.print_page}/>
+              <MovePage href={web_url}>
+              <A_IMG src={`https://static01.nyt.com/${multimedia[0].url}`} alt={print_page}/>
               <Box>
               {lead_paragraph.length>=30?`${lead_paragraph.slice(0,31)}  ...more`:lead_paragraph}
               </Box>
@@ -62,11 +71,7 @@ const Favorties = (props) => {
    
   
   export default Favorties;
-  
-  const Container = styled.div`
-  display: flex;
-  flex-direction: column;
- `
+ 
 const Header = styled.div`
   display:flex;
   margin: auto;
@@ -88,58 +93,62 @@ const Header = styled.div`
     font-size: 1rem;
     height: 4vh;
   };
+ 
 `
-const TopContainer = styled.div`
-  width: 90%;
-  height: 8vh;
-  display:flex;
-  margin:auto;
-  justify-content: center;
-  flex-direction: row;
-  @media (max-width: 768px){
-    height: 3vh;
-   };
 
+const TopContainer = styled.div`
+width: 90%;
+height: 8vh;
+display:flex;
+margin:auto;
+justify-content: center;
+flex-direction: row;
+@media (max-width: 768px){
+  height: 3vh;
+ };
+ 
 `
 const SearchContainer = styled.div`
-  padding: 1% 0% 0% 7%;
-  display:flex;
-  flex-direction: row;
-  align-items: center;
-  width: 70%;
-  height: 100%;
-  background-color: beige;
-  color: black;
- 
-  
+padding: 0% 0% 0% 7%;
+display:flex;
+flex-direction: row;
+align-items: center;
+width: 70%;
+height: 100%;
+background-color: beige;
+color: black;
+
+
+
 `
 
 const SearchBox =styled.input`
- width: 100%;
- height:90%;
- background-color: beige;
- color: white;
- font-size: 20px;
- font-weight: bold;
- outline :none;
- border: none;
- margin-left: 10px;
- @media (max-width: 768px){
-  font-size: 13px;
- };
- @media (max-width: 376px){
-  font-size: 1px;
-  margin-left: 4px;
-  };
+width: 100%;
+height:90%;
+background-color: beige;
+color: white;
+font-size: 20px;
+font-weight: bold;
+outline :none;
+border: none;
+margin-left: 10px;
+@media (max-width: 768px){
+font-size: 13px;
+};
+@media (max-width: 376px){
+font-size: 1px;
+margin-left: 4px;
+};
 `
 const FavoritesContainer = styled.div`
- display:  flex; 
- width: 30%;
-  background-color: beige;
-  color: white;
-  padding: 1% 12% 0% 0%;
-  align-items: center;
-  
+display:  flex; 
+width: 30%;
+height:100%;
+background-color: beige;
+color: white;
+padding: 0% 12% 0% 0%;
+align-items: center;
+
 `
 const  FavoritesBtn = styled.button`
 display:flex;
@@ -154,12 +163,12 @@ font-weight: bold;
 margin-top: 1%;
 cursor: pointer;
 @media (max-width: 768px){
-  font-size: 13px;
- };
- @media (max-width: 376px){
-  font-size: 10px;
-  
-  };
+font-size: 13px;
+};
+@media (max-width: 376px){
+font-size: 10px;
+
+};
 
 `
 

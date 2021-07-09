@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux"
 import { actionCreators as todoActions } from "../redux/modules/articles";
 import { history } from "../redux/configureStore";
-
+import {IArticle} from "./Favorites";
 
 import styled from "styled-components";
 import "../font.css";
@@ -24,8 +24,8 @@ const Main = () => {
   const dispatch = useDispatch();
   const [pageNum,setPageNum] =useState(0);
   const [word,setWord] = React.useState("a");
-  const articles = useSelector((state) => state.articles.allArr);  
-  const favorites = useSelector((state) => state.articles.favoritesArr);
+  const articles = useSelector((state:any) => state.articles.allArr);  
+  const favorites = useSelector((state:any) => state.articles.favoritesArr);
   
   useEffect(()=>{
     dispatch(todoActions.fetchArticles(pageNum));
@@ -44,11 +44,13 @@ const Main = () => {
             <SearchBox onChange={(e)=>{setWord(e.target.value)}} placeholder="Search contents here.."></SearchBox >
           </SearchContainer>
           <FavoritesContainer>
-            <FavoritesBtn onClick={()=>{history.push("/favorites")}}>⭐ Favorites</FavoritesBtn > 
+            <FavoritesBtn onClick={()=>{history.push("/favorites")}}>
+              ⭐ Favorites
+            </FavoritesBtn > 
           </FavoritesContainer>
       </TopContainer>
       <MainContainer>
-        {articles.map((article)=>{
+        {articles.map((article: IArticle)=>{
           const {multimedia,lead_paragraph,web_url,_id} = article
           if(lead_paragraph.includes(word)){
             
@@ -111,21 +113,22 @@ const Main = () => {
       font-size: 1rem;
       height: 4vh;
     };
+    
   `
   const TopContainer = styled.div`
     width: 90%;
-    height: 8vh;
+    height: 9vh;
     display:flex;
-    margin:auto;
+    margin: auto ;
     justify-content: center;
     flex-direction: row;
     @media (max-width: 768px){
       height: 3vh;
      };
-
+     
   `
   const SearchContainer = styled.div`
-    padding: 1% 0% 0% 7%;
+    padding: 0% 0% 0% 5%;
     display:flex;
     flex-direction: row;
     align-items: center;
@@ -160,8 +163,10 @@ const Main = () => {
    width: 30%;
     background-color: beige;
     color: white;
-    padding: 1% 12% 0% 0%;
+    padding: 0% 12% 0% 0%;
     align-items: center;
+    
+    height:100%;
     
   `
   const  FavoritesBtn = styled.button`
@@ -190,7 +195,7 @@ const Main = () => {
     display:flex;
     flex-wrap: wrap;
     width: 90%;
-    height: 250vh;
+    height: 255vh;
     margin:auto;
     justify-content: center;
     background-color: beige;
@@ -264,7 +269,6 @@ const Main = () => {
   justify-content: center;
   font-weight: bold;
   font-size: 15px;
-  padding:2%;
   `
   const Box = styled.div`
   display: flex;
@@ -280,6 +284,7 @@ const Main = () => {
   display: flex;
   margin: auto;
   cursor: pointer;
+  padding:2%;
 
    
   `
