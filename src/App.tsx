@@ -6,6 +6,7 @@ import { history } from "./redux/configureStore";
 import Main from "./pages/Main";
 import Favorties from './pages/Favorites';
 
+//메인페이지와 즐겨찾기 페이지로 이동가능하도록 구성 
 function App() {
   return (
   <React.Fragment>

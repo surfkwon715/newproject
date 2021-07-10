@@ -1,7 +1,6 @@
-
+//API에서 불러와서 판단하기 이전에 먼저 반영되도록 리덕스를 구성
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
-
 
 // action
 const LOAD = "LOAD ";
@@ -9,17 +8,19 @@ const ADD = "ADD";
 const DELETE ="DELETE";
 
 // actionCreator
-const getArticles = createAction(LOAD, (articles:any) => ({articles}));
+const getArticles = createAction(LOAD, (articles:Object[]) => ({articles}));
 const addArticles= createAction(ADD,(article:any)=>({article}));
-const deleteArticles= createAction(DELETE,(id:any)=>({id}));
-
+const deleteArticles= createAction(DELETE,(id:string)=>({id}));
 
 // initialState
+// fetchArticles을 통해 불러오는 값(article 10개)을 allArr에 저장
+// favoritesArr에는 즐겨찾기 페이지에만 보여지는 article들을 저장
 const initialState:any = {
    allArr: [],
    favoritesArr: [],
 };
 
+//pageNum을 받아서 fetch를 사용해서 API호출
 const fetchArticles =  (pageNum:number) =>{
   return async function (dispatch:any) {
     try {
@@ -35,7 +36,7 @@ const fetchArticles =  (pageNum:number) =>{
  }
 }
 
-const addFavorites = (article:any)=>{
+const addFavorites = (article:any) =>{
   return function (dispatch:any) {
     dispatch(addArticles(article))
   }
@@ -65,7 +66,7 @@ export default handleActions(
           return [...draft.favoritesArr,a]
         }
       })
-      })},
+    })},
   initialState
 );
 

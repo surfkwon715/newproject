@@ -15,6 +15,14 @@ export interface IArticle {
   print_page: string;
 }
 
+// 즐겨찾기 화면을 나타내는 컴포넌트입니다
+// 구성: Header + TopContainer + MainContainer 
+// 기능:  
+//  1. 메인화면과 동일하게 API에서 받은 정보 중 이미지와 본문내용 추출 + 카드에 링크를 달아 클릭시 해당 페이지로 이동합니다
+//  2. localStorage.data에 _id가 있는지의 여부를 판단하고 즐겨찾기 해제가 되도록합니다
+//  3. 메인화면과 동일하게 사용자의 입력에 따른 검색기능이 있습니다
+//  4. 메인페이지로 이동합니다
+
 const Favorties = () => {
 
   const dispatch = useDispatch();
@@ -41,7 +49,9 @@ const Favorties = () => {
           {favorites.map((article:IArticle)=>{
             const {multimedia,lead_paragraph,_id,web_url,print_page}  = article
             if(lead_paragraph.includes(word)){
+            
 
+            //별모양버튼을 누를 시에 replace함수를 사용하여 해당 string을 제거합니다 + 메인화면과 동일하게 조건부렌더링을 합니다
             return(
               <All key={_id}>
               <MovePage href={web_url}>
@@ -52,9 +62,7 @@ const Favorties = () => {
             
             </MovePage>
              <FavortiesBtn onClick={()=>{
-               dispatch(todoActions.deleteFavorites(_id));
-              console.log(favorites);
-
+              dispatch(todoActions.deleteFavorites(_id));
               let modifiedData = localStorage.data.replace(_id," ");
               localStorage.data = modifiedData;
               }}>
@@ -70,7 +78,7 @@ const Favorties = () => {
   };
    
   
-  export default Favorties;
+export default Favorties;
  
 const Header = styled.div`
   display:flex;
@@ -93,83 +101,75 @@ const Header = styled.div`
     font-size: 1rem;
     height: 4vh;
   };
- 
 `
 
 const TopContainer = styled.div`
-width: 90%;
-height: 8vh;
-display:flex;
-margin:auto;
-justify-content: center;
-flex-direction: row;
-@media (max-width: 768px){
-  height: 3vh;
- };
- 
+  width: 90%;
+  height: 8vh;
+  display:flex;
+  margin:auto;
+  justify-content: center;
+  flex-direction: row;
+  @media (max-width: 768px){
+    height: 3vh;
+  };
 `
 const SearchContainer = styled.div`
-padding: 0% 0% 0% 7%;
-display:flex;
-flex-direction: row;
-align-items: center;
-width: 70%;
-height: 100%;
-background-color: beige;
-color: black;
-
-
-
+  padding: 0% 0% 0% 7%;
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+  width: 70%;
+  height: 100%;
+  background-color: beige;
+  color: black;
 `
 
 const SearchBox =styled.input`
-width: 100%;
-height:90%;
-background-color: beige;
-color: white;
-font-size: 20px;
-font-weight: bold;
-outline :none;
-border: none;
-margin-left: 10px;
-@media (max-width: 768px){
-font-size: 13px;
-};
-@media (max-width: 376px){
-font-size: 1px;
-margin-left: 4px;
-};
+  width: 100%;
+  height:90%;
+  background-color: beige;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  outline :none;
+  border: none;
+  margin-left: 10px;
+  @media (max-width: 768px){
+  font-size: 13px;
+  };
+  @media (max-width: 376px){
+  font-size: 1px;
+  margin-left: 4px;
+  };
 `
 const FavoritesContainer = styled.div`
-display:  flex; 
-width: 30%;
-height:100%;
-background-color: beige;
-color: white;
-padding: 0% 12% 0% 0%;
-align-items: center;
-
+  display:  flex; 
+  width: 30%;
+  height:100%;
+  background-color: beige;
+  color: white;
+  padding: 0% 12% 0% 0%;
+  align-items: center;
 `
 const  FavoritesBtn = styled.button`
-display:flex;
-flex-direction:row;
-width: 100%;
-font-size: 20px;
-background-color: beige;
-color: grey;
-outline: none;
-border:none;
-font-weight: bold;
-margin-top: 1%;
-cursor: pointer;
-@media (max-width: 768px){
-font-size: 13px;
-};
-@media (max-width: 376px){
-font-size: 10px;
-
-};
-
+  display:flex;
+  flex-direction:row;
+  width: 100%;
+  font-size: 20px;
+  background-color: beige;
+  color: grey;
+  outline: none;
+  border:none;
+  font-weight: bold;
+  margin-top: 1%;
+  cursor: pointer;
+  @media (max-width: 768px){
+  font-size: 13px;
+  };
+  @media (max-width: 376px){
+  font-size: 10px;
+  };
 `
 
 const MainContainer = styled.div`
@@ -189,83 +189,59 @@ const MainContainer = styled.div`
     width:90%;
     height:350vh;
   };
-   
-  
 `
 const MovePage =styled.a`
-display: flex;
-flex-direction: column;
-text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
 
-width: 90%;
-:hover {
-  box-shadow: 2px 5px 12px 2px black ;
-  transition: box-shadow 0.2s ease-in 0s;
-}
-
+  width: 90%;
+  :hover {
+    box-shadow: 2px 5px 12px 2px black ;
+    transition: box-shadow 0.2s ease-in 0s;
+  }
 `
 const All = styled.div`
- display: flex;
- flex-direction: row;
- width:40%;
- height:15%;
- flex-direction: row;
- margin: 3%;
- @media (max-width: 768px){
+  display: flex;
+  flex-direction: row;
+  width:40%;
+  height:15%;
+  flex-direction: row;
+  margin: 3%;
+  @media (max-width: 768px){
   height:20vh;
- };
- @media (max-width: 376px){
+  };
+  @media (max-width: 376px){
   width:80%;
   height:30vh;
-};
- 
+  };
 `
 
 const A_IMG = styled.img`
- display: flex;
- width: 100%;
- height: 80%;
+  display: flex;
+  width: 100%;
+  height: 80%;
 `
 
 const FavortiesBtn = styled.button`
- display:flex;
- flex-direction:flex-start;
- width: 10%;
- height:10%;
- outline: none;
- border: none;
- margin-left: 15px;
- background-color: beige;
- cursor: pointer;
- 
- 
+  display:flex;
+  flex-direction:flex-start;
+  width: 10%;
+  height:10%;
+  outline: none;
+  border: none;
+  margin-left: 15px;
+  background-color: beige;
+  cursor: pointer;
 `
-const BottomContainer = styled.div`
-display:flex;
-width: 90%;
-height: 10vh;
-background-color: beige;
-color: black;
-margin:auto;
-justify-content: center;
-font-weight: bold;
-font-size: 15px;
-padding:2%;
-`
+
 const Box = styled.div`
-display: flex;
-width:100%;
-height:20%;
-background-color: black;
-color: white;
-font-weight: bold;
-align-items: center;
+  display: flex;
+  width:100%;
+  height:20%;
+  background-color: black;
+  color: white;
+  font-weight: bold;
+  align-items: center;
 `
 
-const BText = styled.div`
-display: flex;
-margin: auto;
-cursor: pointer;
-
- 
-`
