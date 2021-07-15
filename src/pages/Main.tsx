@@ -36,7 +36,7 @@ const Main = () => {
     <React.Fragment>
       <Container>
       <Header>
-        <div className="Title" style={{ margin: "1%", padding: "1%"}}>Awesome New York Times </div>  
+        <Title> Awesome New York Times </Title>  
       </Header>
       <TopContainer>
           <SearchContainer>
@@ -100,10 +100,10 @@ const Main = () => {
   `
   const Header = styled.div`
     display:flex;
-    margin: auto;
-    justify-content: center;
     width: 90%;
     height: 15vh;
+    margin: auto;
+    justify-content: center;
     font-size: 9vh;
     background-color: beige;
     background-size: 100% 100%;
@@ -120,10 +120,16 @@ const Main = () => {
       height: 4vh;
     };
   `
+
+  const Title = styled.div`
+    font-family: 'NewYork';
+    margin: 1%; 
+    padding: 1%;
+  `
   const TopContainer = styled.div`
+    display:flex;
     width: 90%;
     height: 9vh;
-    display:flex;
     margin: auto ;
     justify-content: center;
     flex-direction: row;
@@ -163,13 +169,14 @@ const Main = () => {
   const FavoritesContainer = styled.div`
     display:  flex; 
     width: 30%;
+    height:100%;
     background-color: beige;
     color: white;
     padding: 0% 12% 0% 0%;
     align-items: center;
-    height:100%;
+    
   `
-  const  FavoritesBtn = styled.button`
+  const FavoritesBtn = styled.button`
     display:flex;
     flex-direction:row;
     width: 100%;
