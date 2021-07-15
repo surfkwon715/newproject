@@ -26,31 +26,30 @@ export interface IArticle {
 const Favorties = () => {
 
   const dispatch = useDispatch();
-  const [word,setWord] = React.useState("a")
+  const [word,setWord] = React.useState(" ")
   const favorites = useSelector((state:any) => state.articles.favoritesArr);
   
     return (
       <React.Fragment>
         <Header>
-        <Title>Awesome New York Times </Title>  
-      </Header>
+          <Title>Awesome New York Times</Title>  
+        </Header>
         <TopContainer>
-        <SearchContainer>
-               <SearchIcon style={{paddingLeft:"10px"}}/>
-               <SearchBox onChange={(e)=>{setWord(e.target.value)}} placeholder="Search contents here.."></SearchBox >
-            </SearchContainer>
-            <FavoritesContainer>
-              <FavoritesBtn onClick={()=>{history.push("/")}}>
-                🏠 Main Page
-              </FavoritesBtn > 
-            </FavoritesContainer>
+          <SearchContainer>
+            <SearchIcon style={{paddingLeft:"10px"}}/>
+            <SearchBox onChange={(e)=>{setWord(e.target.value)}} placeholder="Search contents here.."></SearchBox >
+          </SearchContainer>
+          <FavoritesContainer>
+            <FavoritesBtn onClick={()=>{history.push("/")}}>
+              🏠 Main Page
+            </FavoritesBtn > 
+          </FavoritesContainer>
         </TopContainer>
         <MainContainer>
           {favorites.map((article:IArticle)=>{
             const {multimedia,lead_paragraph,_id,web_url}  = article
-            if(lead_paragraph.includes(word)){
-            
 
+            if(lead_paragraph.includes(word)){
             //별모양버튼을 누를 시에 replace함수를 사용하여 해당 string을 제거합니다 + 메인화면과 동일하게 조건부렌더링을 합니다
             return(
               <All key={_id}>

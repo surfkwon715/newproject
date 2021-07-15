@@ -23,7 +23,7 @@ import SearchIcon from '@material-ui/icons/Search';
 const Main = () => {
   const dispatch = useDispatch();
   const [pageNum,setPageNum] =useState(0);
-  const [word,setWord] = React.useState("a");
+  const [word,setWord] = React.useState(" ");
   const articles = useSelector((state:any) => state.articles.allArr);  
   const favorites = useSelector((state:any) => state.articles.favoritesArr);
   
@@ -152,7 +152,7 @@ const Main = () => {
     width: 100%;
     height:90%;
     background-color: beige;
-    color: white;
+    color: black;
     font-size: 20px;
     font-weight: bold;
     outline :none;
