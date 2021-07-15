@@ -39,12 +39,15 @@ const fetchArticles =  (pageNum:number) =>{
 const addFavorites = (article:any) =>{
   return function (dispatch:any) {
     dispatch(addArticles(article))
+    localStorage.data+=article._id;
   }
 }
 
 const deleteFavorites = (id:string)=>{
   return function  (dispatch:any)  {
     dispatch(deleteArticles(id))
+    let modifiedData = localStorage.data.replace(id," ");
+    localStorage.data = modifiedData;
   }
 }
 

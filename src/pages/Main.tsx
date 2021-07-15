@@ -34,10 +34,12 @@ const Main = () => {
 
   return (
     <React.Fragment>
+      
       <Container>
       <Header>
         <Title> Awesome New York Times </Title>  
       </Header>
+      
       <TopContainer>
           <SearchContainer>
             <SearchIcon style={{paddingLeft:"10px"}}/>
@@ -49,9 +51,10 @@ const Main = () => {
             </FavoritesBtn > 
           </FavoritesContainer>
       </TopContainer>
+      
       <MainContainer>
         {articles.map((article: IArticle)=>{
-          const {multimedia,lead_paragraph,web_url,_id} = article
+          const {multimedia,lead_paragraph,web_url,_id,abstract} = article
           if(lead_paragraph.includes(word)){
           
           //30자 이상인 경우에 넘치는 내용을 ...more로 표현
@@ -60,7 +63,7 @@ const Main = () => {
           return(
             <All key={_id}>
               <MovePage href={web_url}>
-                <A_IMG src={`https://static01.nyt.com/${multimedia[0].url}`} alt={web_url}/>
+                <A_IMG src={`https://static01.nyt.com/${multimedia[0].url}`} alt={abstract}/>
                 <Box>
                   <BText>
                   {lead_paragraph.length>=30? <div>{lead_paragraph.slice(0,31)} <span style={{color:"grey"}}>...more</span> </div> :lead_paragraph}
@@ -69,25 +72,27 @@ const Main = () => {
               </MovePage>
               <FavortiesBtn onClick={()=>{
                 dispatch(todoActions.addFavorites(article));
-                localStorage.data+=_id;
                 }}>
               {localStorage.data? localStorage.data.includes(_id) ?<StarIcon style={{color:"gold"}}/>:<StarIcon style={{color:"grey"}}/>: <StarIcon style={{color:"grey"}}/>}
               </FavortiesBtn>
-          </All>
-          )}}
+            </All>
+            )
+          }
+        }
         )}
-       
       </MainContainer>
+      
       <BottomContainer 
         onClick={()=>{
         setPageNum(pageNum+1);
         console.log(pageNum);
-      }}>
+        }}>
         <BText>
           Do you want more articles?... <span>불러오기</span>
         </BText>
       </BottomContainer>
       </Container>
+
     </React.Fragment>
   )};
   

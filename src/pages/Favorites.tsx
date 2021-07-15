@@ -13,13 +13,14 @@ export interface IArticle {
   _id:string; 
   web_url:string;
   print_page: string;
+  abstract: string;
 }
 
 // 즐겨찾기 화면을 나타내는 컴포넌트입니다
 // 구성: Header + TopContainer + MainContainer 
 // 기능:  
 //  1. 메인화면과 동일하게 API에서 받은 정보 중 이미지와 본문내용 추출 + 카드에 링크를 달아 클릭시 해당 페이지로 이동합니다
-//  2. localStorage.data에 _id가 있는지의 여부를 판단하고 즐겨찾기 해제가 되도록합니다
+//  (수정사항) 2. localStorage.data에 _id가 있는지의 여부를 판단하고 즐겨찾기 해제가 되도록합니다 => 리덕스로 이동
 //  3. 메인화면과 동일하게 사용자의 입력에 따른 검색기능이 있습니다
 //  4. 메인페이지로 이동합니다
 
@@ -31,9 +32,11 @@ const Favorties = () => {
   
     return (
       <React.Fragment>
+
         <Header>
           <Title>Awesome New York Times</Title>  
         </Header>
+
         <TopContainer>
           <SearchContainer>
             <SearchIcon style={{paddingLeft:"10px"}}/>
@@ -45,30 +48,27 @@ const Favorties = () => {
             </FavoritesBtn > 
           </FavoritesContainer>
         </TopContainer>
+
         <MainContainer>
           {favorites.map((article:IArticle)=>{
-            const {multimedia,lead_paragraph,_id,web_url}  = article
+            const {multimedia,lead_paragraph,_id,web_url,abstract}  = article
 
             if(lead_paragraph.includes(word)){
-            //별모양버튼을 누를 시에 replace함수를 사용하여 해당 string을 제거합니다 + 메인화면과 동일하게 조건부렌더링을 합니다
+            //(수정사항) 별모양버튼을 누를 시에 replace함수를 사용하여 해당 string을 제거합니다=> 리덕스로 이동 + 메인화면과 동일하게 조건부렌더링을 합니다
             return(
               <All key={_id}>
-              <MovePage href={web_url}>
-              <A_IMG src={`https://static01.nyt.com/${multimedia[0].url}`} alt={web_url}/>
-              <Box>
-              {lead_paragraph.length>=30?`${lead_paragraph.slice(0,31)}  ...more`:lead_paragraph}
-              </Box>
-            
-            </MovePage>
-             <FavortiesBtn onClick={()=>{
-              dispatch(todoActions.deleteFavorites(_id));
-              let modifiedData = localStorage.data.replace(_id," ");
-              localStorage.data = modifiedData;
-              }}>
-              {localStorage.data.includes(_id) ?<StarIcon style={{color:"gold"}}/>:<StarIcon style={{color:"lightgrey"}}/>}
-            </FavortiesBtn>
-        
-            </All>
+                <MovePage href={web_url}>
+                  <A_IMG src={`https://static01.nyt.com/${multimedia[0].url}`} alt={abstract}/>
+                  <Box>
+                    {lead_paragraph.length>=30?`${lead_paragraph.slice(0,31)}  ...more`:lead_paragraph}
+                  </Box>
+                </MovePage>
+                <FavortiesBtn onClick={()=>{
+                  dispatch(todoActions.deleteFavorites(_id));
+                  }}>
+                  {localStorage.data.includes(_id) ?<StarIcon style={{color:"gold"}}/>:<StarIcon style={{color:"lightgrey"}}/>}
+                </FavortiesBtn>
+              </All>
             )}}
           )}
         </MainContainer>
@@ -134,7 +134,7 @@ const SearchBox =styled.input`
   width: 100%;
   height:90%;
   background-color: beige;
-  color: white;
+  color: black;
   font-size: 20px;
   font-weight: bold;
   outline :none;
