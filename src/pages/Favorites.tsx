@@ -32,7 +32,7 @@ const Favorties = () => {
     return (
       <React.Fragment>
         <Header>
-        <div className="Title" style={{ margin: "1%", padding: "1%"}}>Awesome New York Times </div>  
+        <Title>Awesome New York Times </Title>  
       </Header>
         <TopContainer>
         <SearchContainer>
@@ -47,7 +47,7 @@ const Favorties = () => {
         </TopContainer>
         <MainContainer>
           {favorites.map((article:IArticle)=>{
-            const {multimedia,lead_paragraph,_id,web_url,print_page}  = article
+            const {multimedia,lead_paragraph,_id,web_url}  = article
             if(lead_paragraph.includes(word)){
             
 
@@ -55,7 +55,7 @@ const Favorties = () => {
             return(
               <All key={_id}>
               <MovePage href={web_url}>
-              <A_IMG src={`https://static01.nyt.com/${multimedia[0].url}`} alt={print_page}/>
+              <A_IMG src={`https://static01.nyt.com/${multimedia[0].url}`} alt={web_url}/>
               <Box>
               {lead_paragraph.length>=30?`${lead_paragraph.slice(0,31)}  ...more`:lead_paragraph}
               </Box>
@@ -102,6 +102,12 @@ const Header = styled.div`
     height: 4vh;
   };
 `
+
+const Title = styled.div`
+    font-family: 'NewYork';
+    margin: 1%; 
+    padding: 1%;
+  `
 
 const TopContainer = styled.div`
   width: 90%;

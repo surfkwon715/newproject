@@ -51,7 +51,7 @@ const Main = () => {
       </TopContainer>
       <MainContainer>
         {articles.map((article: IArticle)=>{
-          const {multimedia,lead_paragraph,web_url,_id,print_page} = article
+          const {multimedia,lead_paragraph,web_url,_id} = article
           if(lead_paragraph.includes(word)){
           
           //30자 이상인 경우에 넘치는 내용을 ...more로 표현
@@ -60,7 +60,7 @@ const Main = () => {
           return(
             <All key={_id}>
               <MovePage href={web_url}>
-                <A_IMG src={`https://static01.nyt.com/${multimedia[0].url}`} alt={print_page}/>
+                <A_IMG src={`https://static01.nyt.com/${multimedia[0].url}`} alt={web_url}/>
                 <Box>
                   <BText>
                   {lead_paragraph.length>=30? <div>{lead_paragraph.slice(0,31)} <span style={{color:"grey"}}>...more</span> </div> :lead_paragraph}
@@ -84,7 +84,7 @@ const Main = () => {
         console.log(pageNum);
       }}>
         <BText>
-          Do you want more articles?... <span style={{color:"blue"}}> 불러오기</span>
+          Do you want more articles?... <span>불러오기</span>
         </BText>
       </BottomContainer>
       </Container>
@@ -282,5 +282,6 @@ const Main = () => {
     display: flex;
     margin: auto;
     cursor: pointer;
-    padding:2%;ㅇ
+    padding:2%;
+    > span{color:blue};
   `
